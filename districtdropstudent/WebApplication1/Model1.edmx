@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="student_tablemvcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="district">
+          <Key>
+            <PropertyRef Name="dis" />
+          </Key>
+          <Property Name="dis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sid" Type="int" Nullable="false" />
+          <Property Name="dname" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="state_db">
+          <Key>
+            <PropertyRef Name="sid" />
+          </Key>
+          <Property Name="sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="statename" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="studentid" />
+          </Key>
+          <Property Name="studentid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sid" Type="int" Nullable="false" />
+          <Property Name="did" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="age" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="photo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Function Name="sp_district" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_insert_student" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sid" Type="int" Mode="In" />
+          <Parameter Name="did" Type="int" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="age" Type="int" Mode="In" />
+          <Parameter Name="ph" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_states" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="student_tablemvcModelStoreContainer">
+          <EntitySet Name="district" EntityType="Self.district" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="state_db" EntityType="Self.state_db" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="student" EntityType="Self.student" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="student_tablemvcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="district">
+          <Key>
+            <PropertyRef Name="dis" />
+          </Key>
+          <Property Name="dis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sid" Type="Int32" Nullable="false" />
+          <Property Name="dname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="state_db">
+          <Key>
+            <PropertyRef Name="sid" />
+          </Key>
+          <Property Name="sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="statename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="studentid" />
+          </Key>
+          <Property Name="studentid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sid" Type="Int32" Nullable="false" />
+          <Property Name="did" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="age" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="photo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="student_tablemvcEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="districts" EntityType="Self.district" />
+          <EntitySet Name="state_db" EntityType="Self.state_db" />
+          <EntitySet Name="students" EntityType="Self.student" />
+          <FunctionImport Name="sp_district" ReturnType="Collection(student_tablemvcModel.sp_district_Result)">
+          <Parameter Name="sid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_insert_student">
+            <Parameter Name="sid" Mode="In" Type="Int32" />
+            <Parameter Name="did" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="age" Mode="In" Type="Int32" />
+            <Parameter Name="ph" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_states" ReturnType="Collection(student_tablemvcModel.sp_states_Result)" />
+        </EntityContainer>
+        <ComplexType Name="sp_district_Result">
+          <Property Type="Int32" Name="dis" Nullable="false" />
+          <Property Type="Int32" Name="sid" Nullable="false" />
+          <Property Type="String" Name="dname" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_states_Result">
+          <Property Type="Int32" Name="sid" Nullable="false" />
+          <Property Type="String" Name="statename" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="student_tablemvcModelStoreContainer" CdmEntityContainer="student_tablemvcEntities1">
+          <EntitySetMapping Name="districts">
+            <EntityTypeMapping TypeName="student_tablemvcModel.district">
+              <MappingFragment StoreEntitySet="district">
+                <ScalarProperty Name="dis" ColumnName="dis" />
+                <ScalarProperty Name="sid" ColumnName="sid" />
+                <ScalarProperty Name="dname" ColumnName="dname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="state_db">
+            <EntityTypeMapping TypeName="student_tablemvcModel.state_db">
+              <MappingFragment StoreEntitySet="state_db">
+                <ScalarProperty Name="sid" ColumnName="sid" />
+                <ScalarProperty Name="statename" ColumnName="statename" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="students">
+            <EntityTypeMapping TypeName="student_tablemvcModel.student">
+              <MappingFragment StoreEntitySet="student">
+                <ScalarProperty Name="studentid" ColumnName="studentid" />
+                <ScalarProperty Name="sid" ColumnName="sid" />
+                <ScalarProperty Name="did" ColumnName="did" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_district" FunctionName="student_tablemvcModel.Store.sp_district">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="student_tablemvcModel.sp_district_Result">
+                <ScalarProperty Name="dis" ColumnName="dis" />
+                <ScalarProperty Name="sid" ColumnName="sid" />
+                <ScalarProperty Name="dname" ColumnName="dname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_insert_student" FunctionName="student_tablemvcModel.Store.sp_insert_student" />
+          <FunctionImportMapping FunctionImportName="sp_states" FunctionName="student_tablemvcModel.Store.sp_states">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="student_tablemvcModel.sp_states_Result">
+                <ScalarProperty Name="sid" ColumnName="sid" />
+                <ScalarProperty Name="statename" ColumnName="statename" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
